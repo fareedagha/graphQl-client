@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
-import { GetAuthorQuery, AddBooksMutation, GetBookQuery } from "../queries/queries";
+import {
+  GetAuthorQuery,
+  AddBooksMutation,
+  GetBookQuery
+} from "../queries/queries";
 
 class AddData extends Component {
   constructor(props) {
@@ -25,27 +29,25 @@ class AddData extends Component {
       });
     }
   }
-  submitForm(e){
-      e.preventDefault()
-      console.log(this.state)
-      this.props.addBookMutation({
-         
-             variables:{ 
-            name : this.state.name,
-             genre :  this.state.genrie,
-              authorId : this.state.authorId
-             },
-             refetchQueries : [{query :GetBookQuery }]
-
-            }
-      )
+  submitForm(e) {
+    e.preventDefault();
+    console.log(this.state);
+    this.props.addBookMutation({
+      variables: {
+        name: this.state.name,
+        genre: this.state.genrie,
+        authorId: this.state.authorId
+      },
+      refetchQueries: [{ query: GetBookQuery }]
+    });
   }
   render() {
     console.log(this.props);
     return (
       <form id="add-book" onSubmit={this.submitForm.bind(this)}>
+        <h3>Add Data Form</h3>
         <div className="field">
-          <label>name</label>
+          <label>name:</label>
           <input
             type="text"
             onChange={e => {
@@ -55,7 +57,7 @@ class AddData extends Component {
         </div>
 
         <div className="field">
-          <label>genrie</label>
+          <label>genrie:</label>
           <input
             type="text"
             onChange={e => {
@@ -65,7 +67,7 @@ class AddData extends Component {
         </div>
 
         <div className="field">
-          <label>author</label>
+          <label>author:</label>
           <select
             onChange={e => {
               this.setState({ authorId: e.target.value });
@@ -75,13 +77,13 @@ class AddData extends Component {
           </select>
         </div>
 
-        <button>+</button>
+        <button>Add</button>
       </form>
     );
   }
 }
 
-export default compose( graphql(GetAuthorQuery,{name:'getAuthorQuery'}),
-graphql(AddBooksMutation,{name : 'addBookMutation'}))
-
-(AddData);
+export default compose(
+  graphql(GetAuthorQuery, { name: "getAuthorQuery" }),
+  graphql(AddBooksMutation, { name: "addBookMutation" })
+)(AddData);
